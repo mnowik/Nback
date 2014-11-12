@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Nback test</title>
+
+		<meta name="description" content="Nback simulation">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../css/reveal.css">
+		<link rel="stylesheet" href="../css/theme/sky.css" id="theme">
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+	</head>
+
+	<body>
+	
+		<!-- Reveal template structure which is populate thanks to the JS object Test-->
+		<div class="reveal">
+
+			<div class="slides"></div>
+		
+		</div>
+
+		<script src="../js/keyboard.js"></script>
+		<script src="../lib/head.min.js"></script>
+		<script src="../js/reveal.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/nback.js"></script>
+		
+		<script>
+			
+			$( document ).ready(function() {
+				var test_1 = new Test(1,['H','C','T','T','I','K','K','W'],[0,0,0,1,0,0,1,0]);
+				var test_2 = new Test(2,['H','C','T','T','I','K','K','W'],[0,0,0,1,0,0,1,0]);
+
+				test_1.init();
+				test_2.init();
+
+				//revealjs template properties can be found online
+				Reveal.initialize({
+					controls: false,
+					progress: false,
+					history: false,
+					center: true,
+					autoSlideStoppable: false,
+					autoSlide: 1000,
+					transition: 'default', //default/cube/page/concave/zoom/linear/fade/none
+				});
+
+				KeyboardJS.on('d', function() { controller([test_1, test_2], $(Reveal.getCurrentSlide()))});
+				KeyboardJS.on('s', function() {
+					alert('serie_1: ' + test_1.display_score() + ';serie_2: ' + test_2.display_score());
+				});
+
+			});
+
+			//if the user press d, it updates the array which contains the answers
+			function controller(tests, s){
+				if (s.attr('version') === "1"){tests[0].update_answers(s.attr('index'));};
+				if (s.attr('version') === "2"){tests[1].update_answers(s.attr('index'));};
+			}
+
+		</script>
+
+	</body>
+</html>
